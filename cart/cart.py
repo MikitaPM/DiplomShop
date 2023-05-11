@@ -57,7 +57,7 @@ class Cart(object):
 
     def __len__(self):
         """
-        Посчет всех товаров в корзине
+        Подсчет всех товаров в корзине
         """
         return sum(item['quantity'] for item in self.cart.values())
 
@@ -70,7 +70,7 @@ class Cart(object):
 
     def clear(self):
         """
-        Удаление уоркзины из сессии
+        Удаление корзины из сессии
         """
         del self.session[settings.CART_SESSION_ID]
         self.session.modifiend = True
