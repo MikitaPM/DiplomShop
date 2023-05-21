@@ -1,0 +1,42 @@
+version: '3.10'
+services:
+    web:
+       build: .
+       command: python manage.py runserver localhost:8000
+       ports:
+           - 8000:8000
+
+#    db:
+#        restart: always
+#        image: postgres:latest
+#        container_name: db_postgres
+#        volumes:
+#          - ./data/postgres:/var/lib/postgresql/data
+#
+#        env_file:
+#          - configs/db.env
+#        ports:
+#          - "5435:5435"
+
+    redis:
+        image: "redis:alpine"
+
+        command: redis-server --requirepass sOmE_sEcUrE_pAsS
+
+        ports:
+          - "6379:6379"
+
+        volumes:
+          - ./data/redis/redis-data:/var/lib/redis
+
+        environment:
+          - REDIS_REPLICATION_MODE=master
+
+    celery:
+        build: .
+        container_name: celery
+        environment:
+            - CELERY_BROKER_URL=redis
+        command: celery -A projectname worker -l info
+        depends_on:
+          - redis

@@ -6,8 +6,8 @@ from .models import Order
 @app.task
 def order_created(order_id):
     order = Order.objects.get(id=order_id)
-    subject = 'Order nr. {}'.format(order_id)
-    message = 'Dear {}, \n\You have successfully placed an order.\ Your order id is{}.'.format(order.first_name,
+    subject = 'Номер заказа. {}'.format(order_id)
+    message = 'Уважаемый {}, \n\Ваш заказ выполнен успешно.\ Новмер заказа:{}.'.format(order.first_name,
                                                                                                order.id)
     mail_sent = send_mail(subject,
                           message,
