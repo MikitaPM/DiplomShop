@@ -7,12 +7,14 @@ class Cart(object):
     """
     Добавление продукта в корзину и изменение его кол-ва
     """
+
     def __init__(self, request):
         self.session = request.session
+
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-            cart = self.session[settings.CART_SESSION_ID] = {}
-            self.cart = cart
+            cart = {}
+        self.cart = cart
 
     def add(self, product, quantity=1, update_quantity=False):
         product_id = str(product.id)
@@ -26,10 +28,10 @@ class Cart(object):
         self.save
 
     def save(self):
-        #Обновление сессии
-        self.session[settings.CART_SESSION_ID]= self.cart
-        #Отметка сеанса как изменненный
-        self.session.modifiend = True
+        # Обновление сессии
+        self.session[settings.CART_SESSION_ID] = self.cart
+        # Отметка сессии как изменённой
+        self.session.modified = True
 
     def remove(self, product):
         """
