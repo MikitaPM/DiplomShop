@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>{% block title %}My shop{% endblock %}</title>
+    <title>{% block title %}Магазин{% endblock %}</title>
     <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
@@ -14,13 +14,12 @@
     <div class="cart">
         {% with total_items=cart|length %}
             {% if cart|length > 0 %}
-                Your cart:
-                <a href="{% url "cart_detail" %}">
-                    {{ total_items }} item{{ total_items|pluralize }},
-                    ${{ cart.get_total_price }}
+                В корзине:
+                <a href="{% url "cart:cart_detail" %}">
+                    {{ total_items }} шт ,${{ cart.get_total_price }}
                 </a>
             {% else %}
-                Your cart is empty.
+                Корзина пуста
             {% endif %}
         {% endwith %}
     </div>
