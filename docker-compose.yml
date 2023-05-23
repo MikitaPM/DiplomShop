@@ -18,15 +18,25 @@ services:
 #        ports:
 #          - "5435:5435"
     redis:
-        image: redis
-        ports:
-          - "6379:6379"
+      image: "redis:alpine"
+
+      command: redis-server
+      #  command: redis-server --requirepass sOmE_sEcUrE_pAsS
+      ports:
+        - "6379:6379"
+      volumes:
+        - ./data/redis/redis-data:/lib/redis
+        - ./data/redis/redis.conf:/usr/local/etc/redis/redis.conf
+        #    - ./data/redis/data:/usr/local/etc/redis/redis.conf/var/lib/redis/data
+      environment:
+        - REDIS_REPLICATION_MODE=master
+
 
     celery:
         build: .
         container_name: celery
-        environment:
-            - CELERY_BROKER_URL=redis
+        #       environment:
+        #         - CELERY_BROKER_URL='redis://redis:6379'
         command: celery -A DiplomShops worker -l info
         depends_on:
           - redis
