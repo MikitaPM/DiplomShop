@@ -4,7 +4,6 @@ from .forms import OrderCreateForm
 from cart.cart import Cart
 from .tasks import order_created
 
-
 def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
@@ -22,7 +21,7 @@ def order_create(request):
             return render(request, 'orders/order/created.html',
                           {'order': order})
     else:
-        form=OrderCreateForm
+        form=OrderCreateForm()
 
     return render(request, 'orders/order/create.html', {'cart': cart, 'form': form})
 

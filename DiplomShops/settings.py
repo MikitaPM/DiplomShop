@@ -133,6 +133,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 CART_SESSION_ID = 'cart'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+
+CELERY_TASK_LIST = [
+    'orders.tasks',
+]
+
+CELERY_IMPORTS = (
+    'orders.tasks',
+)

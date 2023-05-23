@@ -17,26 +17,16 @@ services:
 #          - configs/db.env
 #        ports:
 #          - "5435:5435"
-
     redis:
-        image: "redis:alpine"
-
-        command: redis-server --requirepass sOmE_sEcUrE_pAsS
-
+        image: redis
         ports:
           - "6379:6379"
-
-        volumes:
-          - ./data/redis/redis-data:/var/lib/redis
-
-        environment:
-          - REDIS_REPLICATION_MODE=master
 
     celery:
         build: .
         container_name: celery
         environment:
             - CELERY_BROKER_URL=redis
-        command: celery -A projectname worker -l info
+        command: celery -A DiplomShops worker -l info
         depends_on:
           - redis

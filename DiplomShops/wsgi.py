@@ -1,5 +1,5 @@
 """
-WSGI config for DiplomShops project.
+WSGI configs for DiplomShops project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
